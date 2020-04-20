@@ -14,7 +14,6 @@ def run(image, command, work_dir, volumes, env):
         docker_command.extend(['--env', env_var])
     for volume in volumes:
         docker_command.extend(['-v', volume])
-
     docker_command.append(image)
     docker_command.extend(command)
     atexit.register(kill, container_name)

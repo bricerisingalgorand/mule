@@ -81,32 +81,39 @@ def show_node_configs(data_dir, kmd_dir):
     print(f"Showing node configs at {node_config_path} with:\n{json.dumps(current_node_config, sort_keys=True, indent=4)}")
     print(f"Showing node configs at {kmd_config_path} with:\n{json.dumps(current_kmd_config, sort_keys=True, indent=4)}")
 
-def configure_node(data_dir, kmd_dir, node_config, kmd_config):
+def configure_node(data_dir, kmd_dir, node_config, host_config, kmd_config):
 
     data_dir = file_util.ensure_folder(data_dir)
     kmd_dir = file_util.ensure_folder(kmd_dir)
     node_config_path = f"{data_dir}/config.json"
     kmd_config_path = f"{kmd_dir}/kmd_config.json"
+    host_config_path = f"{data_dir}/host-config.json"
 
     file_util.ensure_file(node_config_path, '{}')
     file_util.ensure_file(kmd_config_path, '{}')
+    file_util.ensure_file(host_config_path, '{}')
 
     current_node_config = file_util.read_json_file(node_config_path)
     current_kmd_config = file_util.read_json_file(kmd_config_path)
+    current_host_config = file_util.read_json_file(host_config_path)
 
     current_node_config.update(node_config)
     current_kmd_config.update(kmd_config)
+    current_host_config.update(host_config)
 
     print(f"Updating node configs at {node_config_path} with:\n{json.dumps(node_config, sort_keys=True, indent=4)}")
-    print(f"Updating node configs at {kmd_config_path} with:\n{json.dumps(kmd_config, sort_keys=True, indent=4)}")
+    print(f"Updating kmd configs at {kmd_config_path} with:\n{json.dumps(kmd_config, sort_keys=True, indent=4)}")
+    print(f"Updating host configs at {host_config_path} with:\n{json.dumps(host_config, sort_keys=True, indent=4)}")
 
     file_util.write_json_file(node_config_path, current_node_config)
     file_util.write_json_file(kmd_config_path, current_kmd_config)
+    file_util.write_json_file(host_config_path, current_host_config)
 
 def start_node(data_dir, kmd_dir, bin_dir=None):
     goal_args = [
         'node',
         'start',
+        '-H',
     ]
     print(f"Starting node with:\n\tdata_dir: {data_dir}\n\tkmd_dir: {kmd_dir}")
     goal(data_dir, kmd_dir, goal_args, bin_dir)
@@ -123,6 +130,7 @@ def restart_node(data_dir, kmd_dir, bin_dir=None):
     goal_args = [
         'node',
         'restart',
+        '-H',
     ]
     print(f"Restarting node with:\n\tdata_dir: {data_dir}\n\tkmd_dir: {kmd_dir}")
     goal(data_dir, kmd_dir, goal_args, bin_dir)

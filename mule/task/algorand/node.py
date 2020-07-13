@@ -29,12 +29,15 @@ class Configure(ITask):
     ]
     node_configs = {}
     kmd_configs = {}
+    host_configs = {}
     def __init__(self, args):
         super().__init__(args)
         self.data_dir = args['data_dir']
         self.kmd_dir = args['kmd_dir']
         if 'node_configs' in args:
             self.node_configs = args['node_configs']
+        if 'host_configs' in args:
+            self.host_configs = args['host_configs']
         if 'kmd_configs' in args:
             self.kmd_configs = args['kmd_configs']
 
@@ -44,6 +47,7 @@ class Configure(ITask):
             self.data_dir,
             self.kmd_dir,
             self.node_configs,
+            self.host_configs,
             self.kmd_configs
         )
 

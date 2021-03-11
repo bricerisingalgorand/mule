@@ -1,11 +1,17 @@
-
 from mule.logger import logger
 
 
 class IArchetype:
 
-    def __init__(self, application_name):
-        self.application_name = application_name
+    def __init__(self, config):
+        self.config = config
+        self.application_name = self.build_name(config)
+
+    def build_name(self, config):
+        name = config['application_name']
+        if 'name_suffix' in config:
+            name = f"{name}{config['name_suffix']}"
+        return name
 
     def deps(self):
         logger.info(f"Not implemented for archetype {self.__class__.__name__}")

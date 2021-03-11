@@ -11,9 +11,9 @@ def get_archetypes():
     return archetypes.keys()
 
 
-def get_archetype(archetype, application_name):
+def get_archetype(archetype, config):
     archetype_clazz = archetypes[archetype]
-    return archetype_clazz(application_name)
+    return archetype_clazz(config)
 
 
 def get_attr(archetype, method):

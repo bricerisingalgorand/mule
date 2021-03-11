@@ -9,7 +9,7 @@ def main():
     validate_config(config)
     archetypes = mule.ci.archetype.util.get_archetypes()
     if config['archetype'] in archetypes:
-        archetype_instance = mule.ci.archetype.util.get_archetype(config['archetype'], config['application_name'])
+        archetype_instance = mule.ci.archetype.util.get_archetype(config['archetype'], config)
         if args.which == 'deps':
             archetype_instance.deps()
         if args.which == 'build':
